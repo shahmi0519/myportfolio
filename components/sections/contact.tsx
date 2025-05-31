@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Loader2 } from "lucide-react"
 
-import emailjs from '@emailjs/browser';
+// import emailjs from '@emailjs/browser';
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
