@@ -50,7 +50,7 @@ export function Contact() {
   //     // Replace with your actual IDs
   //     await emailjs.send(
   //       "service_r4lw8dl", 
-  //       "emplate_cxlqjnv",
+  //       "template_cxlqjnv",
   //       templateParams,
   //       "r2_jJdK0jFl5ArBdN"
   //     );
