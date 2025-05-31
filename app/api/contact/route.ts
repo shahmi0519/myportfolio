@@ -15,16 +15,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid email address" }, { status: 400 })
     }
 
-    // Send email using EmailJS with environment variables
+    // Send email using EmailJS
     const emailJSResponse = await fetch("https://api.emailjs.com/api/v1.0/email/send", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        service_id: process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-        template_id: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-        user_id: process.env.NEXT_PUBLIC_EMAILJS_USER_ID,
+        service_id: "service_r4lw8dl", // Replace with your actual Service ID
+        template_id: "template_cxlqjnv", // Replace with your actual Template ID
+        user_id: "r2_jJdK0jFl5ArBdN", // Replace with your actual User ID
         template_params: {
           from_name: `${firstName} ${lastName}`,
           from_email: email,
@@ -44,8 +44,6 @@ export async function POST(request: NextRequest) {
         { status: 200 },
       )
     } else {
-      const errorData = await emailJSResponse.text()
-      console.error("EmailJS error:", errorData)
       throw new Error("Failed to send email via EmailJS")
     }
   } catch (error) {
