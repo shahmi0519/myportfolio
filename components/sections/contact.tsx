@@ -12,7 +12,7 @@ import { Label } from "@/components/ui/label"
 import { useToast } from "@/hooks/use-toast"
 import { Mail, Phone, MapPin, Send, Github, Linkedin, Loader2 } from "lucide-react"
 
-// import emailjs from '@emailjs/browser';
+import emailjs from '@emailjs/browser';
 
 export function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -33,126 +33,82 @@ export function Contact() {
     }))
   }
 
-  // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  //   e.preventDefault();
-  //   setIsSubmitting(true);
-
-  //   try {
-  //     // First try client-side EmailJS
-  //     const templateParams = {
-  //       from_name: `${formData.firstName} ${formData.lastName}`,
-  //       from_email: formData.email,
-  //       subject: formData.subject,
-  //       message: formData.message,
-  //       to_email: "shahmiahamedaj@gmail.com"
-  //     };
-
-  //     // Replace with your actual IDs
-  //     await emailjs.send(
-  //       "service_r4lw8dl", 
-  //       "template_cxlqjnv",
-  //       templateParams,
-  //       "r2_jJdK0jFl5ArBdN"
-  //     );
-
-  //     toast({
-  //       title: "Message sent successfully!",
-  //       description: "Thank you for your message. I'll get back to you soon.",
-  //     });
-
-  //     // Reset form
-  //     setFormData({
-  //       firstName: "",
-  //       lastName: "",
-  //       email: "",
-  //       subject: "",
-  //       message: "",
-  //     });
-  //   } catch (error) {
-  //     console.error("Form submission error:", error);
-      
-  //     // Fallback to server API if client-side fails
-  //     try {
-  //       const response = await fetch("/api/contact", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(formData),
-  //       });
-
-  //       const result = await response.json();
-
-  //       if (response.ok) {
-  //         toast({
-  //           title: "Message sent successfully!",
-  //           description: "Thank you for your message. I'll get back to you soon.",
-  //         });
-
-  //         // Reset form
-  //         setFormData({
-  //           firstName: "",
-  //           lastName: "",
-  //           email: "",
-  //           subject: "",
-  //           message: "",
-  //         });
-  //       } else {
-  //         throw new Error(result.error || "Failed to send message");
-  //       }
-  //     } catch (serverError) {
-  //       toast({
-  //         title: "Failed to send message",
-  //         description: "Please try again or contact me directly via email.",
-  //         variant: "destructive",
-  //       });
-  //     }
-  //   } finally {
-  //     setIsSubmitting(false);
-  //   }
-  // }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
+      // First try client-side EmailJS
+      const templateParams = {
+        from_name: `${formData.firstName} ${formData.lastName}`,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+        to_email: "shahmiahamedaj@gmail.com"
+      };
 
-      const result = await response.json()
+      // Replace with your actual IDs
+      await emailjs.send(
+        "service_r4lw8dl", 
+        "template_cxlqjnv",
+        templateParams,
+        "r2_jJdK0jFl5ArBdN"
+      );
 
-      if (response.ok) {
-        toast({
-          title: "Message sent successfully!",
-          description: "Thank you for your message. I'll get back to you soon.",
-        })
-
-        // Reset form
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          subject: "",
-          message: "",
-        })
-      } else {
-        throw new Error(result.error || "Failed to send message")
-      }
-    } catch (error) {
-      console.error("Form submission error:", error)
       toast({
-        title: "Failed to send message",
-        description: "Please try again or contact me directly via email.",
-        variant: "destructive",
-      })
+        title: "Message sent successfully!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error("Form submission error:", error);
+      
+      // Fallback to server API if client-side fails
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          toast({
+            title: "Message sent successfully!",
+            description: "Thank you for your message. I'll get back to you soon.",
+          });
+
+          // Reset form
+          setFormData({
+            firstName: "",
+            lastName: "",
+            email: "",
+            subject: "",
+            message: "",
+          });
+        } else {
+          throw new Error(result.error || "Failed to send message");
+        }
+      } catch (serverError) {
+        toast({
+          title: "Failed to send message",
+          description: "Please try again or contact me directly via email.",
+          variant: "destructive",
+        });
+      }
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
   }
 
